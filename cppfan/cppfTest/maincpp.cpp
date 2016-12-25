@@ -24,8 +24,7 @@ int main(int argc, char **argv) {
 
 
   //run test
-
-  cf_Test_run(name, 0);
+  cf_Test_run(name);
 
 
   cf_dumpMem();

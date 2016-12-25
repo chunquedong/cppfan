@@ -117,38 +117,36 @@ Str Str::toUpper()
   return Str(ret);
 }
 
+#define BUF_SIZE 1024
+
 Str Str::fromInt(int i)
 {
-  char buf[50];
-  memset(buf, 0, 50);
-  sprintf(buf, "%d", i);
+  char buf[BUF_SIZE];
+  snprintf(buf, sizeof(buf), "%d", i);
   
   return Str(buf);
 }
 
 Str Str::fromInt64(int64_t i)
 {
-  char buf[50];
-  memset(buf, 0, 50);
-  sprintf(buf, "%lld", i);
+  char buf[BUF_SIZE];
+  snprintf(buf, sizeof(buf), "%lld", i);
   
   return Str(buf);
 }
 
 Str Str::fromFloat(float f)
 {
-  char buf[100];
-  memset(buf, 0, 100);
-  sprintf(buf, "%f", f);
+  char buf[BUF_SIZE];
+  snprintf(buf, sizeof(buf), "%f", f);
   
   return Str(buf);
 }
 
 Str Str::fromFloat(double f)
 {
-  char buf[100];
-  memset(buf, 0, 100);
-  sprintf(buf, "%f", f);
+  char buf[BUF_SIZE];
+  snprintf(buf, sizeof(buf), "%f", f);
   
   return Str(buf);
 }
@@ -161,24 +159,47 @@ int64_t Str::toLong() const
   return nValue;
 }
 
-Str Str::format(char *fmt, char *var...)
+Str Str::format(const char *fmt, ...)
 {
-  char buf[1024];
-  memset(buf,0,1024);
-  sprintf(buf, fmt, var);
+  va_list args;
+  va_start(args, fmt);
   
+  char buf[BUF_SIZE];
+  char *abuf = NULL;
+  int i = vsnprintf(buf, sizeof(buf), fmt, args);
+  
+  if (i < 0) {
+    va_end(args);
+    return "";
+  }
+  if (i >= BUF_SIZE) {
+    abuf = (char*)cf_malloc(i+1);
+    i = vsnprintf(abuf, i, fmt, args);
+    if (i < 0) {
+      va_end(args);
+      return "";
+    }
+    if (i>0) {
+      Str str(abuf);
+      cf_free(abuf);
+      va_end(args);
+      return str;
+    }
+  }
+
+  va_end(args);
   return Str(buf);
 }
 
 const char *Str::toUtf8()
 {
 #ifdef CF_WIN
-  char buf[1024];
-  int n = TextCodec::ansiToUtf8(str.c_str(), buf, 1024);
-  buf[1023] = NULL;
-  char *out = new char[n+1];
-  strcpy(out, buf);
-  return out;
+  size_t size = size() * 2 + 1;
+  char *buf = (char*)cf_malloc(size);
+  int n = TextCodec::ansiToUtf8(cstr(), buf, size);
+  Str str(buf);
+  cf_free(buf);
+  return str;
 #else
   return cstr();
 #endif
@@ -187,10 +208,12 @@ const char *Str::toUtf8()
 Str Str::fromUtf8(const char *d)
 {
 #ifdef CF_WIN
-  char buf[1024];
-  int n = TextCodec::utf8ToAnsi(d, buf, 1024);
-  buf[1023] = NULL;
-  return Str(buf);
+  size_t size = strlen(d) + 1;
+  char *buf = (char*)cf_malloc(size);
+  int n = TextCodec::utf8ToAnsi(d, buf, size);
+  Str str(buf);
+  cf_free(buf);
+  return str;
 #else
   return Str(d);
 #endif

@@ -29,7 +29,9 @@ namespace std {
   };
 }
 
-CF_DEF_TEST(HashMapTest_testObj) {
+CF_BEGIN_TEST_GROUP(HashMapTest)
+
+CF_DEF_TEST(testObj) {
   HashMap<HashMapTestObj, HashMapTestObj> map(4);
   HashMapTestObj obj;
   obj.val = 10;
@@ -39,7 +41,7 @@ CF_DEF_TEST(HashMapTest_testObj) {
   cf_verify(t.val == 10);
 }
 
-CF_DEF_TEST(HashMapTest_testInt) {
+CF_DEF_TEST(testInt) {
   HashMap<int, int> map(4);
   map[1] = 10;
   int t = map[1];
@@ -47,7 +49,7 @@ CF_DEF_TEST(HashMapTest_testInt) {
   cf_verify(t == 10);
 }
 
-CF_DEF_TEST(HashMapTest_testRemove) {
+CF_DEF_TEST(testRemove) {
   HashMap<int, int> map(4);
   map[1] = 10;
 
@@ -56,14 +58,16 @@ CF_DEF_TEST(HashMapTest_testRemove) {
   cf_verify(!map.contains(1));
 }
 
-CF_DEF_TEST(HashMapTest_testInit) {
+CF_DEF_TEST(testInit) {
   HashMap<int, int> map(4);
   int i = map[1];
   cf_verify(i == 0);
 }
 
-CF_DEF_TEST(HashMapTest_testGetOrAdd) {
+CF_DEF_TEST(testGetOrAdd) {
   HashMap<int, int> map(4);
   int i = map.getOrAdd(3, [](const int &i){ return i*i; });
   cf_verify(i == 9);
 }
+
+CF_END_TEST_GROUP

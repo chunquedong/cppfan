@@ -2,7 +2,8 @@
 
 CF_USING_NAMESPACE
 
-#if 1
+CF_BEGIN_TEST_GROUP(ActorTest)
+
 class MyActor : public SimpleActor {
   CF_ACTOR_SLOT(MyActor, foo)
 
@@ -16,7 +17,7 @@ void MyActor::foo(void *arg) {
   fflush(stdout);
 }
 
-CF_DEF_TEST(ActorTest_test){
+CF_DEF_TEST(test){
   MyActor actor;
   actor.start(2);
   actor.send_foo((void*)"hi");
@@ -24,4 +25,4 @@ CF_DEF_TEST(ActorTest_test){
   System::sleep(500);
 }
 
-#endif
+CF_END_TEST_GROUP

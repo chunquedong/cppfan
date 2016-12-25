@@ -2,6 +2,8 @@
 
 CF_USING_NAMESPACE
 
+CF_BEGIN_TEST_GROUP(LinkedListTest)
+
 class LinkedListTestObj : public Object {
 public:
   int val;
@@ -9,7 +11,7 @@ public:
   LinkedListTestObj *next;
 };
 
-CF_DEF_TEST(LinkedListTest_test){
+CF_DEF_TEST(test){
   LinkedList<LinkedListTestObj> list;
 
   LinkedListTestObj obj;
@@ -18,7 +20,7 @@ CF_DEF_TEST(LinkedListTest_test){
   cf_verify(list.size() == 1);
 }
 
-CF_DEF_TEST(LinkedListTest_testInsert){
+CF_DEF_TEST(testInsert){
   LinkedList<LinkedListTestObj> list;
 
   LinkedListTestObj obj;
@@ -35,7 +37,7 @@ CF_DEF_TEST(LinkedListTest_testInsert){
   cf_verify(list.getAt(2) == &obj);
 }
 
-CF_DEF_TEST(LinkedListTest_testRemove){
+CF_DEF_TEST(testRemove){
   LinkedList<LinkedListTestObj> list;
 
   LinkedListTestObj obj;
@@ -60,3 +62,5 @@ CF_DEF_TEST(LinkedListTest_testRemove){
   list.remove(&obj);
   cf_verify(list.size() == 0);
 }
+
+CF_END_TEST_GROUP

@@ -1,6 +1,7 @@
 #include "cppfan/cppfan.h"
 
 CF_USING_NAMESPACE
+CF_BEGIN_TEST_GROUP(MemoryTest)
 
 class MemoryTestSuperObj : public Object {
 public:
@@ -16,7 +17,14 @@ public:
   ~MemoryTestObj() { puts("Obj dector"); }
 };
 
-CF_DEF_TEST(MemoryTest_testNew){
+
+CF_DEF_TEST(testMemAlloc){
+  char *m = (char *)cf_malloc(10);
+  cf_dumpMem();
+  cf_free(m);
+}
+
+CF_DEF_TEST(testNew){
   MemoryTestObj *obj = new MemoryTestObj();
   MemoryTestObj *obj3 = CF_NEW MemoryTestObj();
 
@@ -29,7 +37,7 @@ CF_DEF_TEST(MemoryTest_testNew){
   delete[] obj6;
 }
 
-CF_DEF_TEST(MemoryTest_testPlacementNew){
+CF_DEF_TEST(testPlacementNew){
   char buffer[256];
   char buffer2[256];
   MemoryTestObj *obj2 = new (buffer) MemoryTestObj();
@@ -44,7 +52,9 @@ CF_DEF_TEST(MemoryTest_testPlacementNew){
   puts("-------");
 }
 
-CF_DEF_TEST(MemoryTest_testMemPool){
+CF_DEF_TEST(testMemPool){
   MemPool pool(256, 10);
   cf_dumpMem();
 }
+
+CF_END_TEST_GROUP

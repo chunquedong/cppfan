@@ -26,7 +26,7 @@ CF_BEGIN_NAMESPACE
  */
 struct Test {
   void (*func)();
-  int attr;
+  const char *group;
   const char *name;
   const char *file;
   unsigned int line;
@@ -52,16 +52,16 @@ public:
   
   void add(Test &test) { testList.push_back(test); }
   
-  void run(const char *nameFilter, const int attrFilter);
+  void run(const char *nameFilter);
 };
 
 /**
  * add a test case
  *
  */
-inline void cf_Test_doAdd(void (*func)(), int attr, const char *name
+inline void cf_Test_doAdd(void (*func)(), const char * group, const char *name
                                  , const char *file, const unsigned int line) {
-  Test test = { func, attr, name, file, line };
+  Test test = { func, group, name, file, line };
   TestRunner::cur().add(test);
 }
 
@@ -69,8 +69,8 @@ inline void cf_Test_doAdd(void (*func)(), int attr, const char *name
  * run test case which starts with nameFilter and equals attrFilter
  *
  */
-inline void cf_Test_run(const char *nameFilter, const int attrFilter) {
-  TestRunner::cur().run(nameFilter, attrFilter);
+inline void cf_Test_run(const char *nameFilter) {
+  TestRunner::cur().run(nameFilter);
 }
 
 /**
@@ -78,14 +78,14 @@ inline void cf_Test_run(const char *nameFilter, const int attrFilter) {
  *
  */
 #define cf_Test_add(name)\
-cf_Test_doAdd(name, 0, #name , __FILE__ , __LINE__ )
+cf_Test_doAdd(name, "", #name , __FILE__ , __LINE__ )
 
 /**
- * convenience add test case with a attr value.
+ * convenience add test case with group.
  *
  */
-#define cf_Test_addAttr(name, attr)\
-cf_Test_doAdd(name, attr, #name , __FILE__ , __LINE__ )
+#define cf_Test_addAttr(name, group)\
+cf_Test_doAdd(name, group, #name , __FILE__ , __LINE__ )
 
 /**
  * verify the conditon.
@@ -105,11 +105,20 @@ cf_Test_doAdd(name, attr, #name , __FILE__ , __LINE__ )
   class __##name##_class {\
   public:\
     __##name##_class() {\
-      cf_Test_doAdd(name, 0, #name , __FILE__ , __LINE__ );\
+      cf_Test_doAdd(name, test_group_name, #name , __FILE__ , __LINE__ );\
     }\
   };\
   static __##name##_class __##name##_instance;\
   static void name(void)
+
+/**
+ * Test Group define a namespace for Test
+ */
+#define CF_BEGIN_TEST_GROUP(group) \
+  namespace group {\
+    static const char * test_group_name = #group;
+
+#define CF_END_TEST_GROUP }
 
 CF_END_NAMESPACE
 #endif // _CPPF_TEST_H_

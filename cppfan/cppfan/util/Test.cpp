@@ -24,7 +24,7 @@ TestRunner &TestRunner::cur() {
   return *instance;
 }
 
-void TestRunner::run(const char *nameFilter, const int attrFilter) {
+void TestRunner::run(const char *nameFilter) {
   long count = 0;
   this->errorCount = 0;
   this->successCount = 0;
@@ -32,11 +32,13 @@ void TestRunner::run(const char *nameFilter, const int attrFilter) {
   cf_Log_info("test", "start run test");
 
   for (Test &test : testList) {
-    if (Str(test.name).startsWith(nameFilter) && test.attr == attrFilter) {
-      cf_Log_info("test", "run: %s", test.name);
+    Str name = test.group;
+    name = name + "_" + test.name;
+    if (name.startsWith(nameFilter)) {
+      cf_Log_info("test", "run: %s", name.cstr());
       test.func();
       ++count;
-      cf_Log_info("test", "end: %s", test.name);
+      cf_Log_info("test", "end: %s", name.cstr());
     }
   }
 

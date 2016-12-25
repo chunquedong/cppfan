@@ -152,7 +152,7 @@ public:
   /**
    * 'printf' style format
    */
-  static String format(char *fmt, char *var...);
+  static String format(const char *fmt, ...);
   
   void print();
 };

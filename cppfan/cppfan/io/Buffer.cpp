@@ -16,7 +16,7 @@ Buffer::Buffer() :
     data(nullptr), _size(0), _pos(0), owner(false) {
 }
 
-Buffer::Buffer(size_t size) : _size(size), _pos(0), owner(false) {
+Buffer::Buffer(size_t size) : _size(size), _pos(0), owner(true) {
   data = (uint8_t*)cf_malloc(size);
 }
 
@@ -31,8 +31,16 @@ Buffer::~Buffer() {
 }
 
 ssize_t Buffer::write(const char *buf, size_t size) {
-  if (size > remaining()) {
-    size = remaining();
+  if (size > _size - _pos) {
+    if (owner) {
+      uint8_t *p = (uint8_t*)cf_realloc(data, _pos+size);
+      if (p) {
+        data = p;
+        _size = _pos + size;
+      }
+    } else {
+      size = _size - _pos;
+    }
   }
   memcpy(data + _pos, buf, size);
   return size;
