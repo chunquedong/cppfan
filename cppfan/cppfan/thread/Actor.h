@@ -11,15 +11,15 @@
 #ifndef _CPPF_ACTOR_H
 #define _CPPF_ACTOR_H
 
-#include "cppfan/base/Object.h"
 #include <mutex>
 #include <thread>
 #include <vector>
 #include <string>
 #include <unordered_map>
 
+#include "cppfan/base/Object.h"
 #include "cppfan/thread/Timer.h"
-#include "cppfan/thread/Executor.h"
+#include "cppfan/thread/ThreadPool.h"
 
 CF_BEGIN_NAMESPACE
 
@@ -55,11 +55,13 @@ private:
   std::recursive_mutex mutex;
   std::vector<ActorTimeEvent*> schedulerEvent;
 protected:
-  Executor *threadPool;
+  ThreadPool *threadPool;
   Timer *timer;
 public:
+  std::function<void(Message &msg)> receive;
+public:
   Actor();
-  virtual void start(Executor *threadPool, int maxMsgsBeforeYield = 2, Timer *timer = NULL);
+  virtual void start(ThreadPool *threadPool, int maxMsgsBeforeYield = 2, Timer *timer = NULL);
   
   virtual ~Actor();
   

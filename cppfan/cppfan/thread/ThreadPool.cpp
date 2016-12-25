@@ -8,26 +8,26 @@
  *   2012-12-23  Jed Young  Creation
  */
 
-#include "Executor.h"
+#include "ThreadPool.h"
 
 CF_USING_NAMESPACE
 
-Executor::Executor(int threadSize) : threadSize(threadSize), threadList(threadSize), onlyRunLatest(false) {
+ThreadPool::ThreadPool(int threadSize) : threadSize(threadSize), threadList(threadSize), onlyRunLatest(false) {
 }
 
-Executor::~Executor() {
+ThreadPool::~ThreadPool() {
   threadList.clear();
 }
 
-bool Executor::start() {
+bool ThreadPool::start() {
   for (int i = 0; i < threadSize; ++i)
   {
-    threadList.push_back(std::thread(Executor::enterPoint, this));
+    threadList.push_back(std::thread(ThreadPool::enterPoint, this));
   }
   return true;
 }
 
-void Executor::stop() {
+void ThreadPool::stop() {
   queue.cancel();
   
   for (int i = 0; i < threadSize; ++i)
@@ -47,7 +47,7 @@ void Executor::stop() {
   queue.unlock();
 }
 
-void Executor::each() {
+void ThreadPool::each() {
   queue.lock();
   int i = 0;
   std::list<Task*> &list = queue.getRawQueue();
@@ -63,12 +63,12 @@ void Executor::each() {
   queue.unlock();
 }
 
-void Executor::addTask(Task *task) {
+void ThreadPool::addTask(Task *task) {
   task->_done = false;
   queue.enqueue(task);
 }
 
-void Executor::remove(Task *task) {
+void ThreadPool::remove(Task *task) {
   queue.lock();
   task->cancel();
   std::list<Task*> &list = queue.getRawQueue();
@@ -83,7 +83,7 @@ void Executor::remove(Task *task) {
   queue.unlock();
 }
 
-void Executor::run() {
+void ThreadPool::run() {
   Task *task = NULL;
   while (!queue.isCanceled()) {
     task = NULL;
@@ -111,8 +111,8 @@ void Executor::run() {
   }
 }
 
-int Executor::enterPoint(void *arg) {
-  Executor *self = (Executor *)arg;
+int ThreadPool::enterPoint(void *arg) {
+  ThreadPool *self = (ThreadPool *)arg;
   self->run();
   //#if JUCE_ANDROID
   //    juce::detachEnv();

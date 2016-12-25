@@ -108,7 +108,7 @@ cf_Test_doAdd(name, attr, #name , __FILE__ , __LINE__ )
       cf_Test_doAdd(name, 0, #name , __FILE__ , __LINE__ );\
     }\
   };\
-  __##name##_class __##name##_instance;\
+  static __##name##_class __##name##_instance;\
   static void name(void)
 
 CF_END_NAMESPACE

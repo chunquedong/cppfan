@@ -80,7 +80,7 @@ CF_END_NAMESPACE
 
 #define cf_Log_log(tag, level, msg, ...) do {\
   if (Log::cur().isEnableLevel(level))\
-  Log::cur().doLog(tag, __FILE__, __func__, __LINE__,  level, msg, ## __VA_ARGS__);\
+    Log::cur().doLog(tag, __FILE__, __func__, __LINE__,  level, msg, ## __VA_ARGS__);\
 } while(false)
 
 /**

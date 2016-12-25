@@ -16,7 +16,7 @@ Actor::Actor()
 : Task(false), threadPool(nullptr), maxMsgsBeforeYield(1), timer(nullptr) {
 }
 
-void Actor::start(Executor *threadPool, int maxMsgsBeforeYield, Timer *timer) {
+void Actor::start(ThreadPool *threadPool, int maxMsgsBeforeYield, Timer *timer) {
   this->threadPool = threadPool;
   this->maxMsgsBeforeYield = maxMsgsBeforeYield;
   this->timer = timer;
@@ -37,7 +37,9 @@ void Actor::send(Message &msg) {
 }
 
 void Actor::onReceive(Message &msg) {
-  
+  if (receive) {
+    receive(msg);
+  }
 }
 
 void Actor::onCancel(Message &msg) {
@@ -155,7 +157,7 @@ void Actor::waitDone() {
 ///////////////////////////////////////////////////////////////
 
 void SimpleActor::start(int threadNum) {
-  Executor *threadPool = new Executor(threadNum);
+  ThreadPool *threadPool = new ThreadPool(threadNum);
   Actor::start(threadPool);
   threadPool->start();
 }

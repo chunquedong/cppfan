@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "cppfan/base/Object.h"
-#include "cppfan/thread/Executor.h"
+#include "cppfan/thread/ThreadPool.h"
 #include "cppfan/util/Time.h"
 
 CF_BEGIN_NAMESPACE

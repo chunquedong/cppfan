@@ -8,21 +8,21 @@
  *   2012-12-23  Jed Young  Creation
  */
 
-#ifndef Executor_hpp
-#define Executor_hpp
+#ifndef ThreadPool_hpp
+#define ThreadPool_hpp
 
-#include "cppfan/base/Object.h"
 #include <mutex>
 #include <thread>
 #include <vector>
 
+#include "cppfan/base/Object.h"
 #include "cppfan/thread/Queue.h"
 
 CF_BEGIN_NAMESPACE
 
 
 class Task : public Object {
-  friend class Executor;
+  friend class ThreadPool;
 protected:
   bool _done;
   bool canceled;
@@ -53,7 +53,7 @@ public:
 /**
  * Thread Pool
  */
-class Executor {
+class ThreadPool {
 public:
   
   
@@ -66,8 +66,8 @@ private:
   int threadSize;
   
 public:
-  Executor(int threadSize);
-  virtual ~Executor();
+  ThreadPool(int threadSize);
+  virtual ~ThreadPool();
   
   bool start();
   
@@ -95,4 +95,4 @@ private:
 
 CF_END_NAMESPACE
 
-#endif /* Executor_hpp */
+#endif /* ThreadPool_hpp */

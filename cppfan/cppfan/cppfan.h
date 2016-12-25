@@ -31,7 +31,7 @@
 #include "cppfan/text/TextCodec.h"
 
 #include "cppfan/thread/Timer.h"
-#include "cppfan/thread/Executor.h"
+#include "cppfan/thread/ThreadPool.h"
 #include "cppfan/thread/Actor.h"
 
 #include "cppfan/util/Test.h"

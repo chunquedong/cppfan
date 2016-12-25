@@ -11,11 +11,12 @@
 #ifndef _CPPF_STRING_H_
 #define _CPPF_STRING_H_
 
-#include "cppfan/base/Object.h"
-#include "cppfan/base/Ref.h"
 #include <string.h>
 #include <stdlib.h>
 #include <string>
+
+#include "cppfan/base/Object.h"
+#include "cppfan/base/Ref.h"
 
 CF_BEGIN_NAMESPACE
 

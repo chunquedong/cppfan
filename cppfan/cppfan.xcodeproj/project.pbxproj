@@ -23,7 +23,7 @@
 		3250980B1E0B7F0100B726D9 /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097EA1E0B7F0100B726D9 /* String.cpp */; };
 		3250980C1E0B7F0100B726D9 /* TextCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097EC1E0B7F0100B726D9 /* TextCodec.cpp */; };
 		3250980D1E0B7F0100B726D9 /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097EF1E0B7F0100B726D9 /* Actor.cpp */; };
-		3250980E1E0B7F0100B726D9 /* Executor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097F11E0B7F0100B726D9 /* Executor.cpp */; };
+		3250980E1E0B7F0100B726D9 /* ThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097F11E0B7F0100B726D9 /* ThreadPool.cpp */; };
 		325098101E0B7F0100B726D9 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097F51E0B7F0100B726D9 /* Timer.cpp */; };
 		325098111E0B7F0100B726D9 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097F81E0B7F0100B726D9 /* Config.cpp */; };
 		325098121E0B7F0100B726D9 /* CsvReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097FA1E0B7F0100B726D9 /* CsvReader.cpp */; };
@@ -94,8 +94,8 @@
 		325097ED1E0B7F0100B726D9 /* TextCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextCodec.h; sourceTree = "<group>"; };
 		325097EF1E0B7F0100B726D9 /* Actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Actor.cpp; sourceTree = "<group>"; };
 		325097F01E0B7F0100B726D9 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
-		325097F11E0B7F0100B726D9 /* Executor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Executor.cpp; sourceTree = "<group>"; };
-		325097F21E0B7F0100B726D9 /* Executor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Executor.h; sourceTree = "<group>"; };
+		325097F11E0B7F0100B726D9 /* ThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadPool.cpp; sourceTree = "<group>"; };
+		325097F21E0B7F0100B726D9 /* ThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadPool.h; sourceTree = "<group>"; };
 		325097F41E0B7F0100B726D9 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		325097F51E0B7F0100B726D9 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
 		325097F61E0B7F0100B726D9 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
@@ -233,8 +233,8 @@
 			children = (
 				325097EF1E0B7F0100B726D9 /* Actor.cpp */,
 				325097F01E0B7F0100B726D9 /* Actor.h */,
-				325097F11E0B7F0100B726D9 /* Executor.cpp */,
-				325097F21E0B7F0100B726D9 /* Executor.h */,
+				325097F11E0B7F0100B726D9 /* ThreadPool.cpp */,
+				325097F21E0B7F0100B726D9 /* ThreadPool.h */,
 				325097F41E0B7F0100B726D9 /* Queue.h */,
 				325097F51E0B7F0100B726D9 /* Timer.cpp */,
 				325097F61E0B7F0100B726D9 /* Timer.h */,
@@ -356,7 +356,7 @@
 				325098051E0B7F0100B726D9 /* Buffer.cpp in Sources */,
 				325A85101E09461E00717CF6 /* StringTest.cpp in Sources */,
 				325098091E0B7F0100B726D9 /* MemPool.cpp in Sources */,
-				3250980E1E0B7F0100B726D9 /* Executor.cpp in Sources */,
+				3250980E1E0B7F0100B726D9 /* ThreadPool.cpp in Sources */,
 				3250980A1E0B7F0100B726D9 /* StackTrace.cpp in Sources */,
 				325098171E0B813D00B726D9 /* Time.cpp in Sources */,
 				325097C41E0B777F00B726D9 /* md5.c in Sources */,
