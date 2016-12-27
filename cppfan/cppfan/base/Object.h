@@ -19,6 +19,14 @@ CF_BEGIN_NAMESPACE
 #define CF_OBJECT(Type) public: virtual const char *type(){ return #Type; }\
         static const char *staticType(){ return #Type; } private:
 
+class NoCopy {
+public:
+  NoCopy() = default;
+private:
+  NoCopy(const NoCopy&) = delete;
+  NoCopy& operator = (const NoCopy &) = delete;
+};
+
 /**
  * Base class for all class.
  * support reference count to manager memory.

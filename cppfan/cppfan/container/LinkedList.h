@@ -20,7 +20,7 @@ CF_BEGIN_NAMESPACE
  * the element must provider 'previous' and 'next' field
  */
 template<typename T>
-class LinkedList {
+class LinkedList : NoCopy{
   T head;
   T &tail;
   int length;

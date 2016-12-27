@@ -19,11 +19,13 @@ CF_BEGIN_NAMESPACE
 /**
  * Intrusive smart pointer. the T must be extend from Object
  */
-template<class T>
+template<typename T>
 class Ref {
   T *pointer;
 public:
   Ref() : pointer(NULL) {
+    Object *p = pointer;
+    p = NULL;
   }
 
   Ref(T *pointer) : pointer(pointer) {
