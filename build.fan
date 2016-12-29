@@ -16,8 +16,8 @@ class Build : BuildGroup
   {
     childrenScripts =
     [
-      `cfan/build.fan`,
-      `cfan/buildCfTest.fan`,
+      `cppfan/build.fan`,
+      `cppfan/buildCfTest.fan`,
     ]
   }
 }
