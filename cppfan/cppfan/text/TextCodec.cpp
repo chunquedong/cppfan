@@ -6,7 +6,7 @@
 //  Copyright © 2016年 yangjiandong. All rights reserved.
 //
 
-#include "TextCodec.h"
+#include "cppfan/text/TextCodec.h"
 
 CF_USING_NAMESPACE
 

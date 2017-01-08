@@ -120,6 +120,7 @@
 		325A84FF1E09461E00717CF6 /* maincpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maincpp.cpp; sourceTree = "<group>"; };
 		325A85001E09461E00717CF6 /* MemoryTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryTest.cpp; sourceTree = "<group>"; };
 		325A85011E09461E00717CF6 /* StringTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringTest.cpp; sourceTree = "<group>"; };
+		32E5FDEB1E227B6400E0B36F /* Array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +187,7 @@
 				325097D61E0B7F0100B726D9 /* Cache.h */,
 				325097D71E0B7F0100B726D9 /* HashMap.h */,
 				325097D81E0B7F0100B726D9 /* LinkedList.h */,
+				32E5FDEB1E227B6400E0B36F /* Array.h */,
 			);
 			path = container;
 			sourceTree = "<group>";

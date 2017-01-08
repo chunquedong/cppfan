@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 chunquedong. All rights reserved.
 //
 
-#include "Buffer.h"
+#include "cppfan/io/Buffer.h"
 #include <iostream>
 #include <stdlib.h>
 

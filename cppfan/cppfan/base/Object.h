@@ -84,7 +84,8 @@ inline void cf_deleteIt(T& o) {
 
 template<class T>
 inline void cf_deleteIt(T* o) {
-  if (o) o->release();
+  if (dynamic_cast<Object*>(o)) o->release();
+  else delete o;
 }
 
 

@@ -8,7 +8,7 @@
  *   2012-12-23  Jed Young  Creation
  */
 
-#include "ThreadPool.h"
+#include "cppfan/thread/ThreadPool.h"
 
 CF_USING_NAMESPACE
 

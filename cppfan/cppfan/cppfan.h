@@ -18,6 +18,7 @@
 #include "cppfan/container/LinkedList.h"
 #include "cppfan/container/HashMap.h"
 #include "cppfan/container/Cache.h"
+#include "cppfan/container/Array.h"
 
 #include "cppfan/io/FileStream.h"
 #include "cppfan/io/Buffer.h"
