@@ -21,7 +21,7 @@ CF_BEGIN_NAMESPACE
  * LUR Cache
  */
 template<typename K, typename V>
-class Cache : public Object, NoCopy {
+class Cache : public Object, NoCopyable {
   struct CacheItem {
     K key;
     V val;

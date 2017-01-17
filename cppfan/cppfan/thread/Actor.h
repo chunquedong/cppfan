@@ -26,7 +26,7 @@ CF_BEGIN_NAMESPACE
 typedef std::lock_guard<std::recursive_mutex> lock_guard;
 
 /**
- * Current Object
+ * Concurrent Object
  */
 class Actor : public Task {
 public:

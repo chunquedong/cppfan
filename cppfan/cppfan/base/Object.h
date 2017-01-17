@@ -19,12 +19,12 @@ CF_BEGIN_NAMESPACE
 #define CF_OBJECT(Type) public: virtual const char *type(){ return #Type; }\
         static const char *staticType(){ return #Type; } private:
 
-class NoCopy {
+class NoCopyable {
 public:
-  NoCopy() = default;
+  NoCopyable() = default;
 private:
-  NoCopy(const NoCopy&) = delete;
-  NoCopy& operator = (const NoCopy &) = delete;
+  NoCopyable(const NoCopyable&) = delete;
+  NoCopyable& operator = (const NoCopyable &) = delete;
 };
 
 /**
@@ -84,7 +84,11 @@ inline void cf_deleteIt(T& o) {
 
 template<class T>
 inline void cf_deleteIt(T* o) {
-  if (dynamic_cast<Object*>(o)) o->release();
+  if (o == nullptr) return;
+  if (std::is_base_of<Object, T>::value) {
+    Object * obj = dynamic_cast<Object*>(o);
+    if (obj) obj->release();
+  }
   else delete o;
 }
 

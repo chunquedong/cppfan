@@ -67,7 +67,7 @@ public:
 
 };
 
-class Stream : public Object {
+class Stream : public Object, NoCopyable {
 public:
   Endian::Type endian = Endian::Big;
   
