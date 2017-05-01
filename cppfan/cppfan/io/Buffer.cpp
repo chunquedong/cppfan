@@ -13,15 +13,15 @@
 CF_USING_NAMESPACE
 
 Buffer::Buffer() :
-    data(nullptr), _size(0), _pos(0), owner(false) {
+    data(nullptr), _pos(0), _size(0), owner(false) {
 }
 
-Buffer::Buffer(size_t size) : _size(size), _pos(0), owner(true) {
+Buffer::Buffer(size_t size) :  _pos(0), _size(size), owner(true) {
   data = (uint8_t*)cf_malloc(size);
 }
 
 Buffer::Buffer(uint8_t* data, size_t size, bool owner) :
-    data(data), _size(size), _pos(0), owner(owner) {
+    data(data), _pos(0), _size(size), owner(owner) {
 }
 
 Buffer::~Buffer() {

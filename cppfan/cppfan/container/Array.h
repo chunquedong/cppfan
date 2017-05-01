@@ -21,7 +21,7 @@ class Array : public std::vector<T> {
 public:
   
   void add(const T& t) {
-    push_back(t);
+    this->push_back(t);
   }
   
   T pop() {
@@ -29,6 +29,10 @@ public:
     this->pop_back();
     return temp;
   }
+  T &get(size_t i) {
+      return this->at(i);
+  }
+
   void removeAt(size_t i) {
     this->erase(this->begin()+i);
   }

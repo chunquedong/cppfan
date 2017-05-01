@@ -90,7 +90,7 @@ void Log::LogListener::onLog(Log::LogRec &rec) {
 void Log::LogListener::print(LogRec &rec, const char *msg) {
   puts(msg);
   fflush(stdout);
-  
+  CF_UNUSED(rec);
 #ifdef __ANDROID__
   int androidLevel = getAndroidLogLevel(rec.level);
   __android_log_print(androidLevel, rec.tag, "(%s,%d) %s\n", rec.func, rec.line, rec.msg);
@@ -135,6 +135,7 @@ FileLogListener::~FileLogListener() {
 }
 void FileLogListener::print(Log::LogRec &rec, const char *msg) {
   //fprintf(file, msg);
+  CF_UNUSED(rec);
   fputs(msg, file);
   fflush(file);
 }
