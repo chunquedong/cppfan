@@ -97,7 +97,7 @@ cf_Test_doAdd(name, group, #name , __FILE__ , __LINE__ )
   if (!(exp)) {\
     cf_Log_error("test", "test fail: %s", #exp);\
   }\
-} while(0);
+} while(0)
 
 
 #define CF_DEF_TEST(name) \

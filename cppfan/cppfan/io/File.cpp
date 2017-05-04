@@ -46,29 +46,37 @@ bool File::rename(Str &name) {
   return rc == 0;
 }
 
-Str File::baseName() {
-  ssize_t i = _path.index(Str("/"));
-  ssize_t j = _path.index(Str("."));
-  if (i == -1 || j==-1 || i>=j) {
-    return "";
-  }
-  return _path.substr(i+1, j-i-1);
+Str File::getBaseName(Str &_path) {
+    ssize_t i = _path.index(Str("/"));
+    ssize_t j = _path.index(Str("."));
+    if (i == -1 || j==-1 || i>=j) {
+        return "";
+    }
+    return _path.substr(i+1, j-i-1);
 }
 
-Str File::parentPath() {
-  ssize_t i = _path.index(Str("/"));
-  if (i == -1) {
-    return "";
-  }
-  return _path.substr(0, i);
+Str File::getName(Str &_path) {
+    ssize_t i = _path.index(Str("/"));
+    if (i == -1) {
+        return _path;
+    }
+    return _path.substr(i+1);
 }
 
-Str File::extName() {
-  ssize_t j = _path.index(Str("."));
-  if (j==-1) {
-    return "";
-  }
-  return _path.substr(j+1);
+Str File::getParentPath(Str &_path) {
+    ssize_t i = _path.index(Str("/"));
+    if (i == -1) {
+        return "";
+    }
+    return _path.substr(0, i);
+}
+
+Str File::getExtName(Str &_path) {
+    ssize_t j = _path.index(Str("."));
+    if (j==-1) {
+        return "";
+    }
+    return _path.substr(j+1);
 }
 
 #ifdef CF_WIN
@@ -208,7 +216,7 @@ bool File::createDir() {
   return true;
 }
 
-bool File::delet() {
+bool File::remove() {
   if (::remove(_path.cstr()) == 0) {
     return true;
   }

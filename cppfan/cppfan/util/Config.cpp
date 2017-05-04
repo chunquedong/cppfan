@@ -18,7 +18,7 @@ Config::Config(const char *path) : file(path),
 }
 
 std::string Config::get(const char *key, const char *defVal) {
-  Time now = TimeUtil::currentTimeMillis();
+  MillisTime now = TimeUtil::currentTimeMillis();
   if (now - lastCheckTime > checkTime) {
     lastCheckTime = now;
     if (file.mtime() > lastModifyTime) {

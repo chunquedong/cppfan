@@ -70,7 +70,7 @@ public:
   virtual void stop();
   
   void send(Message &msg);
-  void sendLater(Message &msg, Time ms);
+  void sendLater(Message &msg, MillisTime ms);
   virtual void onReceive(Message &msg);
   virtual void onCancel(Message &msg);
   

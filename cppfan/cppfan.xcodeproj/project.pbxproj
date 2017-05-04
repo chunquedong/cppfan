@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		325097B91E0B68F500B726D9 /* jute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097B31E0B68F500B726D9 /* jute.cpp */; };
 		325097BA1E0B68F500B726D9 /* tinycthread.c in Sources */ = {isa = PBXBuildFile; fileRef = 325097B51E0B68F500B726D9 /* tinycthread.c */; };
 		325097BB1E0B68F500B726D9 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 325097B71E0B68F500B726D9 /* utf8.c */; };
 		325097C31E0B777F00B726D9 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325097BF1E0B777F00B726D9 /* base64.cpp */; };
@@ -53,9 +52,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		325097B21E0B68F500B726D9 /* httplib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = httplib.h; sourceTree = "<group>"; };
-		325097B31E0B68F500B726D9 /* jute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jute.cpp; sourceTree = "<group>"; };
-		325097B41E0B68F500B726D9 /* jute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jute.h; sourceTree = "<group>"; };
 		325097B51E0B68F500B726D9 /* tinycthread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tinycthread.c; sourceTree = "<group>"; };
 		325097B61E0B68F500B726D9 /* tinycthread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinycthread.h; sourceTree = "<group>"; };
 		325097B71E0B68F500B726D9 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf8.c; sourceTree = "<group>"; };
@@ -141,9 +137,6 @@
 				325097C01E0B777F00B726D9 /* base64.h */,
 				325097C11E0B777F00B726D9 /* md5.h */,
 				325097C21E0B777F00B726D9 /* md5.c */,
-				325097B21E0B68F500B726D9 /* httplib.h */,
-				325097B31E0B68F500B726D9 /* jute.cpp */,
-				325097B41E0B68F500B726D9 /* jute.h */,
 				325097B51E0B68F500B726D9 /* tinycthread.c */,
 				325097B61E0B68F500B726D9 /* tinycthread.h */,
 				325097B71E0B68F500B726D9 /* utf8.c */,
@@ -382,7 +375,6 @@
 				325A850F1E09461E00717CF6 /* MemoryTest.cpp in Sources */,
 				3250980D1E0B7F0100B726D9 /* Actor.cpp in Sources */,
 				3250980C1E0B7F0100B726D9 /* TextCodec.cpp in Sources */,
-				325097B91E0B68F500B726D9 /* jute.cpp in Sources */,
 				325A850C1E09461E00717CF6 /* LinkedListTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

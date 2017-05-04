@@ -73,7 +73,7 @@ void Actor::sleep(long millitm) {
   std::this_thread::sleep_for( dura );
 }
 
-void Actor::sendLater(Message &msg, Time ms) {
+void Actor::sendLater(Message &msg, MillisTime ms) {
   if (timer == NULL) return;
   
   ActorTimeEvent *event = new ActorTimeEvent(this);

@@ -27,7 +27,7 @@ CF_USING_NAMESPACE
   #include <sys/time.h>
   #include <sys/sysctl.h>
 
-  NanosTime TimeUtil::nanoTicks(void) {
+  int64_t TimeUtil::nanoTicks(void) {
     //            clock_serv_t cclock;
     //            mach_timespec_t mts;
     //
@@ -56,7 +56,7 @@ CF_USING_NAMESPACE
 #else
   #include <sys/timeb.h>
 
-  NanosTime TimeUtil::nanoTicks(void) {
+  int64_t TimeUtil::nanoTicks(void) {
     //  return clock() / (CLOCKS_PER_SECOND * 1000);
     struct timespec ts;
     static time_t startTime;
@@ -92,7 +92,7 @@ int64_t TimeUtil::currentTimeMillis() {
 
 #include <Windows.h>
 
-NanosTime TimeUtil::nanoTicks() {
+int64_t TimeUtil::nanoTicks() {
   /*
    LARGE_INTEGER m_nBeginTime;
    LARGE_INTEGER m_nFreq;
@@ -127,13 +127,23 @@ int64_t TimeUtil::currentTimeMillis() {
 }
 #endif
 
+DateTime::DateTime(tm *t) {
+    time_t time = mktime(t);
+    sinceEpoch = time * 1000L;
+}
 
-std::string TimeUtil::formatTimeMillis(int64_t ms, const char *format) {
+void DateTime::components(tm *t) {
+    const time_t time = toUnix();
+    tm *tt = localtime( &time );
+    *t = *tt;
+}
+
+std::string DateTime::format(const char *format) {
   char buffer[128], timeStr[128];
   if(!format){
     format = "%Y-%m-%d %H:%M:%S";
   }
-  
+  int64_t ms = millis();
   struct timeval tms = {(long)ms/1000, ((int32_t)ms*1000)};
   strftime(buffer, sizeof(buffer), format, localtime(&tms.tv_sec));
   sprintf(timeStr, "%s.%03lld", buffer, ms%1000);

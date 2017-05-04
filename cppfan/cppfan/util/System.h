@@ -21,7 +21,7 @@ namespace System {
 /**
  * sleep current thread millitm second
  */
-void sleep(Time millitm);
+void sleep(MillisTime millitm);
 
 /**
  * get current execable file path

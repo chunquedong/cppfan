@@ -16,34 +16,97 @@
 
 CF_BEGIN_NAMESPACE
 
-typedef int64_t Time;//millisecond
 typedef int64_t NanosTime;
+typedef int64_t MillisTime;
 
 namespace TimeUtil {
-  
-  const static NanosTime NanoPerSecond = 1000000000L;
-  const static NanosTime NanoPerMillis = 1000000L;
-  
-  const static Time Seconds = 1000L;
-  const static Time Minutes = 60L * Seconds;
-  const static Time Hour = 60L * Minutes;
-  const static Time Day = Hour * 24L;
-  
-  /**
-   * return the milliseconds from midnight, January 1, 1970 UTC.
-   */
-  Time currentTimeMillis();
-  
-  
-  std::string formatTimeMillis(Time ms, const char *format=NULL);
-  
-  /**
-   * returns a relative time.
-   * Typically it is the number of nanosecond ticks which have elapsed since system startup.
-   */
-  NanosTime nanoTicks();
-  inline Time millisTicks() { return nanoTicks()/NanoPerMillis; }
+    const int64_t NanoPerSecond = 1000000000L;
+    
+    /**
+     * return the milliseconds from midnight, January 1, 1970 UTC.
+     */
+    MillisTime currentTimeMillis();
+    
+    /**
+     * returns a relative time.
+     * Typically it is the number of nanosecond ticks which have elapsed since system startup.
+     */
+    NanosTime nanoTicks();
+    
+    inline MillisTime millisTicks() { return nanoTicks()/1000000L; }
 }
+
+/**
+* RelativeTime
+*/
+class Duration {
+    int64_t ticks;
+public:
+    Duration() : ticks(0) {}
+    Duration(int64_t nanoTicks) : ticks(nanoTicks) {}
+    
+    int64_t nanos() { return ticks; }
+    int64_t millis() { return ticks / 1000000L; }
+    int64_t seconds() { return ticks / 1000000000L; }
+    int64_t minutes() { return seconds()/60; }
+    int64_t hour() { return minutes()/60; }
+    int64_t day() { return hour()/24; }
+    
+    static Duration fromNanos(int64_t t) { return Duration(t); }
+    static Duration fromMillis(int64_t t) { return Duration(t*1000000L); }
+    static Duration fromSeconds(int64_t t) { return Duration(t*1000000000L); }
+    static Duration fromMinutes(int64_t t) { return Duration(t*1000000000L*60); }
+    static Duration fromHour(int64_t t) { return Duration(t*1000000000L*60*60); }
+    static Duration fromDay(int64_t t) { return Duration(t*1000000000L*60*60*24); }
+    static Duration now() {
+        return Duration(TimeUtil::nanoTicks());
+    }
+    
+    Duration operator+(Duration &t) { return Duration(ticks+t.ticks); }
+    Duration operator-(Duration &t) { return Duration(ticks-t.ticks); }
+    
+    bool operator== (const Duration &t) const { return ticks == t.ticks; }
+    bool operator!= (const Duration &t) const { return ticks != t.ticks; }
+    bool operator< (const Duration &t) const { return ticks < t.ticks; }
+    bool operator> (const Duration &t) const { return ticks > t.ticks; }
+    bool operator<= (const Duration &t) const { return ticks <= t.ticks; }
+    bool operator>= (const Duration &t) const { return ticks >= t.ticks; }
+};
+
+/**
+ * Absolute date and time
+ */
+class DateTime {
+    int64_t sinceEpoch;//millisecond since 1970
+public:
+    DateTime() : sinceEpoch(TimeUtil::currentTimeMillis()) {}
+    DateTime(int64_t millisecond) : sinceEpoch(millisecond) {}
+    DateTime(tm *t);
+    
+    std::string format(const char *format=NULL);
+    void components(tm *t);
+    
+    int64_t millis() { return sinceEpoch; }
+    time_t toUnix() { return sinceEpoch/1000; }
+    
+    static DateTime fromUnix(time_t t) { return DateTime(t * 1000L); }
+    
+    Duration operator+(DateTime &t) {
+        int64_t millis = this->millis() + t.millis();
+        return Duration::fromMillis(millis);
+    }
+    Duration operator-(DateTime &t) {
+        int64_t millis = this->millis() - t.millis();
+        return Duration::fromMillis(millis);
+    }
+    bool operator== (const DateTime &t) const { return sinceEpoch == t.sinceEpoch; }
+    bool operator!= (const DateTime &t) const { return sinceEpoch != t.sinceEpoch; }
+    bool operator< (const DateTime &t) const { return sinceEpoch < t.sinceEpoch; }
+    bool operator> (const DateTime &t) const { return sinceEpoch > t.sinceEpoch; }
+    bool operator<= (const DateTime &t) const { return sinceEpoch <= t.sinceEpoch; }
+    bool operator>= (const DateTime &t) const { return sinceEpoch >= t.sinceEpoch; }
+};
+
 
 CF_END_NAMESPACE
 

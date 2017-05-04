@@ -78,8 +78,10 @@ void Log::LogListener::onLog(Log::LogRec &rec) {
     timeStr[len-1] = 0;
   }
 #else
-  int64_t now = TimeUtil::currentTimeMillis();
-  std::string timeStr = TimeUtil::formatTimeMillis(now);
+  //int64_t now = TimeUtil::currentTimeMillis();
+  //std::string timeStr = TimeUtil::formatTimeMillis(now);
+  DateTime dt;
+  std::string timeStr = dt.format();
 #endif
   snprintf(buf, BUF_SIZE, "%s[%s]%c(%s,%d) %s", timeStr.c_str()
            , rec.tag, cf_LogLevel_str[rec.level][0], rec.func, rec.line, rec.msg);

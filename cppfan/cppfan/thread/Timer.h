@@ -30,10 +30,10 @@ public:
   class TimerEvent : public Task {
     friend class Timer;
     
-    Time time_;
+    MillisTime time_;
   public:
-    Time delay;
-    Time interval;
+    MillisTime delay;
+    MillisTime interval;
     int repeat;
     
     TimerEvent(bool autoDelete) : Task(autoDelete) {}
@@ -61,7 +61,7 @@ public:
   void add(TimerEvent *event);
   
 private:
-  Time doEvent();
+  MillisTime doEvent();
   void run();
   static int enterPoint(void *arg);
   

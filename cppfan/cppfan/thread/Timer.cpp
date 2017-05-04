@@ -25,7 +25,7 @@ Timer::~Timer() {
 }
 
 void Timer::add(TimerEvent *event) {
-  Time now = TimeUtil::millisTicks();
+  MillisTime now = TimeUtil::millisTicks();
   
   std::lock_guard<std::mutex> guard(mutex);
   event->time_ = now + event->delay;
@@ -71,10 +71,10 @@ void Timer::stop() {
   thread.join();
 }
 
-Time Timer::doEvent() {
-  Time now = TimeUtil::millisTicks();
+MillisTime Timer::doEvent() {
+  MillisTime now = TimeUtil::millisTicks();
   TimerEvent *event, *temp;
-  Time nextTime, delta;
+  MillisTime nextTime, delta;
   bool moved;
   std::vector<TimerEvent*>::iterator it = list.begin();
   nextTime = INT_MAX;
@@ -114,8 +114,8 @@ void Timer::run() {
   
   while (!cancel) {
     std::unique_lock<std::mutex> lk(mutex);
-    Time waitTime = doEvent();
-    Time mill = waitTime;
+    MillisTime waitTime = doEvent();
+    MillisTime mill = waitTime;
 
     condition.wait_for(lk, std::chrono::milliseconds(mill));
   }

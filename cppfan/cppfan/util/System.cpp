@@ -8,7 +8,7 @@ CF_USING_NAMESPACE
   #include <time.h>
   #include <unistd.h>
 
-  void System::sleep(Time millitm) {
+  void System::sleep(MillisTime millitm) {
     usleep(millitm * 1000);
   }
 

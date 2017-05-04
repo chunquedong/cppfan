@@ -29,7 +29,7 @@ class File {
   bool _isDir;
   bool _exists;
   size_t _size;
-  Time _mtime;//modified time
+  MillisTime _mtime;//modified time
 
 public:
   /**
@@ -37,9 +37,9 @@ public:
    *
    */
   File() : _exists(false) {}
-  File(const char *path) : _path(path) {
-    loadInfo();
-  }
+  File(const char *path) : _path(path) {}
+    
+  File(Str &path) : _path(path) {}
   
   Str &path() { return _path; }
 
@@ -81,7 +81,7 @@ public:
    * remove file
    *
    */
-  bool delet();
+  bool remove();
   
   bool rename(Str &name);
 
@@ -89,7 +89,7 @@ public:
    * get file modify time
    *
    */
-  Time mtime() {
+  MillisTime mtime() {
     return _mtime;
   }
 
@@ -97,14 +97,26 @@ public:
    * Dir
    */
   std::vector<File> list();
+    
+    
+  static Str getBaseName(Str &uri);
+    
+  static Str getName(Str &uri);
+    
+  static Str getParentPath(Str &uri);
+    
+  static Str getExtName(Str &uri);
   
-  Str baseName();
+  Str baseName() { return getBaseName(_path); }
+
+  Str name() { return getName(_path); }
   
-  Str parentPath();
+  File parent() { Str p = getParentPath(_path); return File(p); }
   
-  Str extName();
+  Str extName() { return getExtName(_path); }
 
 };
+
 
 CF_END_NAMESPACE
 

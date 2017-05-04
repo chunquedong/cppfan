@@ -28,9 +28,9 @@ CF_BEGIN_NAMESPACE
 class Config {
   File file;
   std::unordered_map<std::string, std::string> map;
-  Time lastCheckTime;
-  Time lastModifyTime;
-  Time checkTime = TimeUtil::Minutes;
+  MillisTime lastCheckTime;
+  MillisTime lastModifyTime;
+  MillisTime checkTime = 60 * 1000;
 
 public:
   /**
