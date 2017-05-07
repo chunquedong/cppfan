@@ -17,7 +17,7 @@ CF_USING_NAMESPACE
   #include <time.h>
   #include <unistd.h>
 
-#ifdef __MACH__
+#ifdef P__MACH__
   #include <mach/mach.h>
   #include <mach/mach_time.h>
   //#include <sys/_types/_timespec.h>
@@ -55,13 +55,17 @@ CF_USING_NAMESPACE
   }
 #else
   #include <sys/timeb.h>
+  #include <sys/time.h>
 
   int64_t TimeUtil::nanoTicks(void) {
     //  return clock() / (CLOCKS_PER_SECOND * 1000);
     struct timespec ts;
     static time_t startTime;
+#ifdef __MACH__
+    int rc = clock_gettime(CLOCK_MONOTONIC, &ts);
+#else
     int rc = clock_gettime(CLOCK_BOOTTIME, &ts);
-    
+#endif
     //获取CLOCK_BOOTTIME失败的时候使用time函数代替
     if (rc != 0) {
       if (startTime == 0) {
