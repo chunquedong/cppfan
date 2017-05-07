@@ -57,8 +57,8 @@ public:
   ~HashMap() {
   }
 
-  V &get(const K &key, const K &defVal) const {
-    auto itr = find(key);
+  V &get(const K &key, V &defVal) {
+    auto itr = this->find(key);
     if (itr == this->end()) {
       return defVal;
     }

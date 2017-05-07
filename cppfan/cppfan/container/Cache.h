@@ -40,14 +40,14 @@ public:
   }
 
   V &get(K &key) {
-    CacheItem *item = *map.get(key);
+    CacheItem *item = map[key];
     list.remove(item);
     list.insertFirst(item);
     return item->val;
   }
 
   V &_get(K &key) {
-    CacheItem *item = *map.get(key);
+    CacheItem *item = map[key];
     return item->val;
   }
 
