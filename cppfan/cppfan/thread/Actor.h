@@ -59,6 +59,8 @@ protected:
   Timer *timer;
 public:
   std::function<void(Message &msg)> receive;
+protected:
+  virtual bool mergeMessage(Message *cur, Message *pre);
 public:
   Actor();
   virtual void start(ThreadPool *threadPool, int maxMsgsBeforeYield = 2, Timer *timer = NULL);
@@ -86,8 +88,8 @@ public:
   std::unordered_map<std::string, Func> slotMap;
 public:
   virtual void start(int threadNum);
-  virtual void stop();
-  virtual void onReceive(Message &msg);
+  virtual void stop() override;
+  virtual void onReceive(Message &msg) override;
 };
 
 

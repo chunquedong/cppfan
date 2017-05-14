@@ -12,7 +12,8 @@
 
 CF_USING_NAMESPACE
 
-ThreadPool::ThreadPool(int threadSize) : threadSize(threadSize), threadList(threadSize), onlyRunLatest(false) {
+ThreadPool::ThreadPool(int threadSize) : threadSize(threadSize), onlyRunLatest(false) {
+  threadList.reserve(threadSize);
 }
 
 ThreadPool::~ThreadPool() {

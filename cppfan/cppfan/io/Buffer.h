@@ -33,8 +33,8 @@ public:
   Buffer(uint8_t* data, size_t size, bool owner);
   ~Buffer();
 
-  virtual ssize_t write(const char *buf, size_t size);
-  virtual ssize_t read(char *buf, size_t size);
+  virtual ssize_t write(const char *buf, size_t size) override;
+  virtual ssize_t read(char *buf, size_t size) override;
 
   void readSlice(Buffer &out, bool copy);
 

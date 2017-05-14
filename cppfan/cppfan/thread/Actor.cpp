@@ -25,8 +25,22 @@ void Actor::start(ThreadPool *threadPool, int maxMsgsBeforeYield, Timer *timer) 
 Actor::~Actor() {
 }
 
+bool Actor::mergeMessage(Message *cur, Message *pre) {
+  return false;
+}
+
 void Actor::send(Message &msg) {
   lock_guard guard(mutex);
+  
+  auto &list = queue.getRawQueue();
+  for (auto it = list.begin();
+       it != list.end();) {
+    if (mergeMessage(&msg, &(*it))) {
+      it = list.erase(it);
+    } else {
+      ++it;
+    }
+  }
   
   queue.enqueue(msg);
   

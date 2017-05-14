@@ -30,21 +30,21 @@ public:
     return _new FileStream(f);
   }
 
-  virtual ssize_t read(char *out, size_t n) {
+  virtual ssize_t read(char *out, size_t n) override {
     ssize_t c = fread(out, 1, n, file);
     return c;
   }
 
-  virtual ssize_t write(const char *m, size_t n) {
+  virtual ssize_t write(const char *m, size_t n) override {
     ssize_t c = fwrite(m, n, 1, file);
     return c;
   }
 
-  virtual void flush() {
+  virtual void flush() override {
     fflush(file);
   }
 
-  void close() {
+  virtual void close() override {
     int c = fclose(file);
     CF_UNUSED(c);
     cf_assert(c == 0);
