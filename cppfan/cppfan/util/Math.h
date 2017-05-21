@@ -15,6 +15,8 @@
 
 #include "cppfan/base/common.h"
 
+#define cf_tolerance 1e-8
+
 CF_BEGIN_NAMESPACE
 
 namespace Math {
@@ -54,7 +56,7 @@ namespace Math {
    * approximately equal.
    * if tolerance is -1, then it is computed using the magnitude.
    */
-  inline bool cf_Math_approx(double a, double b, double tolerance) {
+  inline bool approx(double a, double b, double tolerance = cf_tolerance) {
     double af;
     double bf;
     if (tolerance == -1) {
