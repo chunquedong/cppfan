@@ -229,14 +229,14 @@ double Stream::readDouble() {
 void Stream::writeStr(Str &buf) {
   size_t size = buf.size();
   writeUInt32((uint32_t)size);
-  write(buf.cstr(), size);
+  write(buf.toUtf8().c_str(), size);
 }
 
 Str Stream::readStr() {
   size_t size = readUInt32();
   Str s;
   s.reserve(size);
-  write(s.cstr(), size);
+  write(s.toUtf8().c_str(), size);
   return (s);
 }
 

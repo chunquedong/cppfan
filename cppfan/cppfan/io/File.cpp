@@ -13,7 +13,7 @@
 CF_USING_NAMESPACE
 
 bool File::mkdirs(){
-  const char * path = _path.cstr();
+  const char * path = _path.toUtf8().c_str();
   size_t len = strlen(path);
   char temp[1024];
   int lastSep = 0;
@@ -42,7 +42,7 @@ bool File::mkdirs(){
 }
 
 bool File::rename(Str &name) {
-  int rc = ::rename(_path.cstr(), name.cstr());
+  int rc = ::rename(_path.toUtf8().c_str(), name.toUtf8().c_str());
   return rc == 0;
 }
 
@@ -198,7 +198,7 @@ std::vector<File> File::list() {
 
 bool File::loadInfo() {
   struct stat stbuf;
-  if (stat(_path.cstr(), &stbuf) == -1) {
+  if (stat(_path.toUtf8().c_str(), &stbuf) == -1) {
     _exists = false;
     return false;
   }
@@ -210,14 +210,14 @@ bool File::loadInfo() {
 }
 
 bool File::createDir() {
-  if (mkdir(_path.cstr(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1) {
+  if (mkdir(_path.toUtf8().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1) {
     return false;
   }
   return true;
 }
 
 bool File::remove() {
-  if (::remove(_path.cstr()) == 0) {
+  if (::remove(_path.toUtf8().c_str()) == 0) {
     return true;
   }
   return false;
@@ -225,7 +225,7 @@ bool File::remove() {
 
 std::vector<File> File::list() {
   std::vector<File> flist;
-  DIR *dir = opendir(_path.cstr());
+  DIR *dir = opendir(_path.toUtf8().c_str());
   if (dir == NULL) return flist;
   
   struct dirent *ent = NULL;

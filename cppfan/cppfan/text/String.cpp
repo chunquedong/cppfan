@@ -15,7 +15,7 @@
 CF_USING_NAMESPACE
 
 size_t String::hashCode() const {
-  std::hash<std::string> hash_fn;
+  std::hash<std::wstring> hash_fn;
   return hash_fn(str);
 }
 
@@ -30,12 +30,12 @@ String String::operator+(const String &s) {
 
 void String::trimEnd() {
   str.erase(std::find_if(str.rbegin(), str.rend(),
-                       std::not1(std::ptr_fun<int, int>(std::isspace))).base(), str.end());
+                       std::not1(std::ptr_fun<int, int>(std::iswspace))).base(), str.end());
 }
 
 void String::trimStart() {
   str.erase(str.begin(), std::find_if(str.begin(), str.end(),
-                                  std::not1(std::ptr_fun<int, int>(std::isspace))));
+                                  std::not1(std::ptr_fun<int, int>(std::iswspace))));
 }
 
 bool String::iequals(const String& b)
@@ -44,7 +44,7 @@ bool String::iequals(const String& b)
   if (b.size() != sz)
     return false;
   for (unsigned int i = 0; i < sz; ++i)
-    if (tolower(str[i]) != tolower(b.str[i]))
+    if (towlower(str[i]) != towlower(b.str[i]))
       return false;
   return true;
 }
@@ -89,13 +89,13 @@ void Str::removeLastChar()
 
 Str Str::toLower()
 {
-  std::string ret;
+  std::wstring ret;
   char chrTemp;
   size_t i;
   for (i = 0; i < str.length(); ++i)
   {
     chrTemp = str[i];
-    chrTemp = tolower(chrTemp);
+    chrTemp = towlower(chrTemp);
     ret.push_back(chrTemp);
   }
   
@@ -104,13 +104,13 @@ Str Str::toLower()
 
 Str Str::toUpper()
 {
-  std::string ret;
+  std::wstring ret;
   char chrTemp;
   size_t i;
   for (i = 0; i < str.length(); ++i)
   {
     chrTemp = str[i];
-    chrTemp = toupper(chrTemp);
+    chrTemp = towupper(chrTemp);
     ret.push_back(chrTemp);
   }
   
@@ -121,32 +121,32 @@ Str Str::toUpper()
 
 Str Str::fromInt(int i)
 {
-  char buf[BUF_SIZE];
-  snprintf(buf, sizeof(buf), "%d", i);
+  wchar_t buf[BUF_SIZE];
+  swprintf(buf, sizeof(buf), L"%d", i);
   
   return Str(buf);
 }
 
-Str Str::fromInt64(int64_t i)
+Str Str::fromInt(int64_t i)
 {
-  char buf[BUF_SIZE];
-  snprintf(buf, sizeof(buf), "%lld", i);
+  wchar_t buf[BUF_SIZE];
+  swprintf(buf, sizeof(buf), L"%lld", i);
   
   return Str(buf);
 }
 
 Str Str::fromFloat(float f)
 {
-  char buf[BUF_SIZE];
-  snprintf(buf, sizeof(buf), "%f", f);
+  wchar_t buf[BUF_SIZE];
+  swprintf(buf, sizeof(buf), L"%f", f);
   
   return Str(buf);
 }
 
 Str Str::fromFloat(double f)
 {
-  char buf[BUF_SIZE];
-  snprintf(buf, sizeof(buf), "%f", f);
+  wchar_t buf[BUF_SIZE];
+  swprintf(buf, sizeof(buf), L"%f", f);
   
   return Str(buf);
 }
@@ -155,29 +155,29 @@ int64_t Str::toLong() const
 {
   if (str.empty()) return 0;
   int64_t nValue=0;
-  sscanf(str.c_str(),"%lld",&nValue);
+  swscanf(str.c_str(),L"%lld",&nValue);
   return nValue;
 }
 
-Str Str::format(const char *fmt, ...)
+Str Str::format(const wchar_t *fmt, ...)
 {
   va_list args;
   va_start(args, fmt);
   
-  char buf[BUF_SIZE];
-  char *abuf = NULL;
-  int i = vsnprintf(buf, sizeof(buf), fmt, args);
+  wchar_t buf[BUF_SIZE];
+  wchar_t *abuf = NULL;
+  int i = vswprintf(buf, sizeof(buf), fmt, args);
   
   if (i < 0) {
     va_end(args);
-    return "";
+    return L"";
   }
   if (i >= BUF_SIZE) {
-    abuf = (char*)cf_malloc(i+1);
-    i = vsnprintf(abuf, i, fmt, args);
+    abuf = (wchar_t*)cf_malloc(i+1);
+    i = vswprintf(abuf, i, fmt, args);
     if (i < 0) {
       va_end(args);
-      return "";
+      return L"";
     }
     if (i>0) {
       Str str(abuf);
@@ -191,35 +191,37 @@ Str Str::format(const char *fmt, ...)
   return Str(buf);
 }
 
-const char *Str::toUtf8()
+std::string Str::toUtf8()
 {
-#ifdef CF_WIN
-  size_t size = size() * 2 + 1;
-  char *buf = (char*)cf_malloc(size);
-  int n = TextCodec::ansiToUtf8(cstr(), buf, size);
-  Str str(buf);
-  cf_free(buf);
-  return str;
-#else
-  return cstr();
-#endif
+  size_t size = this->size() * 4 + 1;
+  //char *buf = (char*)cf_malloc(size);
+  std::string buf;
+  buf.resize(size);
+  TextCodec::unicodeToUtf8(cstr(), (char*)buf.data(), size);
+  size_t realSize = strlen(buf.c_str());
+  buf.resize(realSize);
+  return buf;
 }
 
 Str Str::fromUtf8(const char *d)
 {
-#ifdef CF_WIN
-  size_t size = strlen(d) + 1;
-  char *buf = (char*)cf_malloc(size);
-  int n = TextCodec::utf8ToAnsi(d, buf, size);
-  Str str(buf);
-  cf_free(buf);
-  return str;
-#else
-  return Str(d);
-#endif
+    size_t size = strlen(d) + 1;
+    wchar_t *buf = (wchar_t*)cf_malloc(size*sizeof(wchar_t));
+    TextCodec::utf8ToUnicode(d, buf, size);
+    Str str(buf);
+    cf_free(buf);
+    return str;
+}
+
+Str::String(const char *cstr) {
+    size_t size = strlen(cstr) + 1;
+    wchar_t *buf = (wchar_t*)cf_malloc(size*sizeof(wchar_t));
+    TextCodec::utf8ToUnicode(cstr, buf, size);
+    str = buf;
+    cf_free(buf);
 }
 
 void Str::print()
 {
-  printf("%s\n", str.c_str());
+  wprintf(L"%ls\n", str.c_str());
 }

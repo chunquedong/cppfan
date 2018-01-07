@@ -36,7 +36,7 @@ std::string Config::get(const char *key, const char *defVal) {
 }
 
 void Config::load() {
-  const char *path = file.path().cstr();
+  const char *path = file.path().toUtf8().c_str();
   FILE *file;
   signed char c;//current char
   char key[1024];//key buffer

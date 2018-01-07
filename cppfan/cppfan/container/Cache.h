@@ -18,7 +18,7 @@
 CF_BEGIN_NAMESPACE
 
 /**
- * LUR Cache
+ * LRU Cache
  */
 template<typename K, typename V>
 class Cache : public Object, NoCopyable {
