@@ -205,6 +205,7 @@ std::string Str::toUtf8()
 
 Str Str::fromUtf8(const char *d)
 {
+    if (d == NULL) return Str();
     size_t size = strlen(d) + 1;
     wchar_t *buf = (wchar_t*)cf_malloc(size*sizeof(wchar_t));
     TextCodec::utf8ToUnicode(d, buf, size);

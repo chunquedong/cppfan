@@ -88,6 +88,14 @@ public:
     }
     return true;
   }
+    
+  String readLine() {
+    //char *fgets( char *str, int count, FILE *stream );
+    wchar_t buf[7693];
+    const wchar_t *s = fgetws(buf, 7693, file);
+    if (!s) return Str();
+    return Str(s);
+  }
 };
 
 
