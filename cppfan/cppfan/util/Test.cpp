@@ -35,10 +35,10 @@ void TestRunner::run(const char *nameFilter) {
     Str name = test.group;
     name = name + "_" + test.name;
     if (name.startsWith(nameFilter)) {
-      cf_Log_info("test", "run: %s", name.cstr());
+      cf_Log_info("test", "run: %s", name.c_str());
       test.func();
       ++count;
-      cf_Log_info("test", "end: %s", name.cstr());
+      cf_Log_info("test", "end: %s", name.c_str());
     }
   }
 

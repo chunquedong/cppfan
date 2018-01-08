@@ -38,7 +38,7 @@ void String::trimStart() {
                                   std::not1(std::ptr_fun<int, int>(std::iswspace))));
 }
 
-bool String::iequals(const String& b)
+bool String::iequals(const String& b) const
 {
   size_t sz = size();
   if (b.size() != sz)
@@ -65,11 +65,11 @@ void String::replace(const String& src, const String& dst)
   }
 }
 
-String String::substr(size_t pos, size_t len) {
+String String::substr(size_t pos, size_t len) const {
   return String(str.substr(pos, len));
 }
 
-std::vector<String> String::split(const String &sep) {
+std::vector<String> String::split(const String &sep) const {
   std::vector<String> tokens;
   std::size_t start = 0, end = 0;
   while ((end = index(sep, start)) != -1) {
@@ -81,13 +81,13 @@ std::vector<String> String::split(const String &sep) {
 }
 
 
-void Str::removeLastChar()
+void String::removeLastChar()
 {
   if (str.length() == 0) return;
   str.erase(str.length() - 1);
 }
 
-Str Str::toLower()
+String String::toLower() const
 {
   std::wstring ret;
   char chrTemp;
@@ -99,10 +99,10 @@ Str Str::toLower()
     ret.push_back(chrTemp);
   }
   
-  return Str(ret);
+  return String(ret);
 }
 
-Str Str::toUpper()
+String String::toUpper() const
 {
   std::wstring ret;
   char chrTemp;
@@ -114,44 +114,44 @@ Str Str::toUpper()
     ret.push_back(chrTemp);
   }
   
-  return Str(ret);
+  return String(ret);
 }
 
 #define BUF_SIZE 1024
 
-Str Str::fromInt(int i)
+String String::fromInt(int i)
 {
   wchar_t buf[BUF_SIZE];
   swprintf(buf, sizeof(buf), L"%d", i);
   
-  return Str(buf);
+  return String(buf);
 }
 
-Str Str::fromInt(int64_t i)
+String String::fromInt(int64_t i)
 {
   wchar_t buf[BUF_SIZE];
   swprintf(buf, sizeof(buf), L"%lld", i);
   
-  return Str(buf);
+  return String(buf);
 }
 
-Str Str::fromFloat(float f)
+String String::fromFloat(float f)
 {
   wchar_t buf[BUF_SIZE];
   swprintf(buf, sizeof(buf), L"%f", f);
   
-  return Str(buf);
+  return String(buf);
 }
 
-Str Str::fromFloat(double f)
+String String::fromFloat(double f)
 {
   wchar_t buf[BUF_SIZE];
   swprintf(buf, sizeof(buf), L"%f", f);
   
-  return Str(buf);
+  return String(buf);
 }
 
-int64_t Str::toLong() const
+int64_t String::toLong() const
 {
   if (str.empty()) return 0;
   int64_t nValue=0;
@@ -159,7 +159,7 @@ int64_t Str::toLong() const
   return nValue;
 }
 
-Str Str::format(const wchar_t *fmt, ...)
+String String::format(const wchar_t *fmt, ...)
 {
   va_list args;
   va_start(args, fmt);
@@ -180,7 +180,7 @@ Str Str::format(const wchar_t *fmt, ...)
       return L"";
     }
     if (i>0) {
-      Str str(abuf);
+      String str(abuf);
       cf_free(abuf);
       va_end(args);
       return str;
@@ -188,33 +188,33 @@ Str Str::format(const wchar_t *fmt, ...)
   }
 
   va_end(args);
-  return Str(buf);
+  return String(buf);
 }
 
-std::string Str::toUtf8()
+std::string String::toUtf8()
 {
   size_t size = this->size() * 4 + 1;
   //char *buf = (char*)cf_malloc(size);
   std::string buf;
   buf.resize(size);
-  TextCodec::unicodeToUtf8(cstr(), (char*)buf.data(), size);
+  TextCodec::unicodeToUtf8(c_str(), (char*)buf.data(), size);
   size_t realSize = strlen(buf.c_str());
   buf.resize(realSize);
   return buf;
 }
 
-Str Str::fromUtf8(const char *d)
+String String::fromUtf8(const char *d)
 {
-    if (d == NULL) return Str();
+    if (d == NULL) return String();
     size_t size = strlen(d) + 1;
     wchar_t *buf = (wchar_t*)cf_malloc(size*sizeof(wchar_t));
     TextCodec::utf8ToUnicode(d, buf, size);
-    Str str(buf);
+    String str(buf);
     cf_free(buf);
     return str;
 }
 
-Str::String(const char *cstr) {
+String::String(const char *cstr) {
     size_t size = strlen(cstr) + 1;
     wchar_t *buf = (wchar_t*)cf_malloc(size*sizeof(wchar_t));
     TextCodec::utf8ToUnicode(cstr, buf, size);
@@ -222,7 +222,7 @@ Str::String(const char *cstr) {
     cf_free(buf);
 }
 
-void Str::print()
+void String::print()
 {
   wprintf(L"%ls\n", str.c_str());
 }

@@ -35,7 +35,7 @@ public:
   String(const std::wstring &cstr) : str(cstr) {
   }
   
-  String(std::wstring &&cstr) : str(cstr) {
+  String(const std::wstring &&cstr) : str(cstr) {
   }
   
   String(const String &s) : str(s.str) {
@@ -44,12 +44,12 @@ public:
   String(String &&s) : str(std::move(s.str)) {
   }
   
-  String& operator=(String &s) {
+  String& operator=(const String &s) {
     str = s.str;
     return *this;
   }
   
-  String& operator=(String &&s) {
+  String& operator=(const String &&s) {
     str = std::move(s.str);
     return *this;
   }
@@ -57,11 +57,11 @@ public:
   std::wstring &stdstr() { return str; }
   const std::wstring &stdstr() const { return str; }
   
-  const wchar_t *cstr() const { return str.c_str(); }
+  const wchar_t *c_str() const { return str.c_str(); }
   
   size_t size() const { return str.size(); }
   
-  unsigned char operator[](size_t i) { return str.at(i); }
+  wchar_t operator[](size_t i) { return str.at(i); }
 
   bool isEmpty() const { return size() == 0; }
   
@@ -71,13 +71,13 @@ public:
   
   void reseize(size_t s) { str.resize(s); }
 
-  int toInt() const { return (int)wcstol(cstr(), NULL, 10); }
+  int toInt() const { return (int)wcstol(c_str(), NULL, 10); }
   
   int64_t toLong() const;
 
-  float toFloat() const { return wcstof(cstr(), NULL); }
+  float toFloat() const { return wcstof(c_str(), NULL); }
 
-  double toDouble() const { return wcstod(cstr(), NULL); }
+  double toDouble() const { return wcstod(c_str(), NULL); }
 
   virtual size_t hashCode() const;
   virtual int compare(const Object &other) const { return (*this) - (const String &)other; }
@@ -96,23 +96,23 @@ public:
   bool operator==(const String &other) const { return str == other.str; }
   
   /*equals ignore case */
-  bool iequals(const String &other);
+  bool iequals(const String &other) const;
   
-  bool contains(const String& s) { return index(s) >= 0; }
+  bool contains(const String& s) const { return index(s) >= 0; }
   
-  long index(const String& s, size_t pos = 0) { return str.find(s.str, pos); }
+  long index(const String& s, size_t pos = 0) const { return str.find(s.str, pos); }
   
-  long lastIndex(const String& s) { return str.rfind(s.str); }
+  long lastIndex(const String& s) const { return str.rfind(s.str); }
   
-  bool startsWith(const String& s) { return index(s) == 0; }
+  bool startsWith(const String& s) const { return index(s) == 0; }
   
-  bool endsWith(const String& s) { return lastIndex(s) == (size()-s.size()); }
+  bool endsWith(const String& s) const { return lastIndex(s) == (size()-s.size()); }
   
   void replace(const String& src, const String& dst);
   
-  std::vector<String> split(const String &sep);
+  std::vector<String> split(const String &sep) const;
   
-  String substr(size_t pos, size_t len = -1);
+  String substr(size_t pos, size_t len = -1) const;
   
   void trimEnd();
   
@@ -128,12 +128,12 @@ public:
   /**
    * Return this string with all uppercase characters replaced to lowercase
    */
-  String toLower();
+  String toLower() const;
   
   /**
    * Return this string with all lowercase characters replaced to uppercase
    */
-  String toUpper();
+  String toUpper() const;
   
   /**
    * convert to UTF-8 charset encode
