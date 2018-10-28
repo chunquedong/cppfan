@@ -191,7 +191,7 @@ String String::format(const wchar_t *fmt, ...)
   return String(buf);
 }
 
-std::string String::toUtf8()
+std::string &String::toUtf8()
 {
   size_t size = this->size() * 4 + 1;
   //char *buf = (char*)cf_malloc(size);
@@ -200,7 +200,8 @@ std::string String::toUtf8()
   TextCodec::unicodeToUtf8(c_str(), (char*)buf.data(), size);
   size_t realSize = strlen(buf.c_str());
   buf.resize(realSize);
-  return buf;
+  utf8 = buf;
+  return utf8;
 }
 
 String String::fromUtf8(const char *d)

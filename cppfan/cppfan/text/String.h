@@ -23,6 +23,7 @@ CF_BEGIN_NAMESPACE
 class String : public Object {
 public:
   std::wstring str;
+  std::string utf8;
 public:
   String() {
   }
@@ -58,6 +59,7 @@ public:
   const std::wstring &stdstr() const { return str; }
   
   const wchar_t *c_str() const { return str.c_str(); }
+  const char *cstr() { return toUtf8().c_str(); }
   
   size_t size() const { return str.size(); }
   
@@ -138,7 +140,7 @@ public:
   /**
    * convert to UTF-8 charset encode
    */
-  std::string toUtf8();
+  std::string &toUtf8();
   static String fromUtf8(const char *);
   
   /**
