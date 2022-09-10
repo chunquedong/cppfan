@@ -1,0 +1,11 @@
+name = cppfanTest
+summary = cppfan unit test
+outType = exe
+version = 1.0
+srcDirs = cppfTest/
+incDir = cppfTest/
+extIncDirs = ./,/C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/*
+depends = cppfan 1.0
+defines = __STDC__
+extLibs = winmm.lib
+#excludeSrc = .*main.*

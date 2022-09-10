@@ -29,7 +29,7 @@ CF_USING_NAMESPACE
 
 #include <Windows.h>
 
-  void System::sleep(Time millitm) {
+  void System::sleep(MillisTime millitm) {
     Sleep(millitm);
   }
 

@@ -19,12 +19,20 @@
 
 CF_BEGIN_NAMESPACE
 
+#ifdef max
+  #undef max
+#endif
+
+#ifdef min
+  #undef min
+#endif
+
 namespace Math {
 
   double const PI = 3.14159265358979323846;
 
   template<typename T>
-  T max(T a, T b) { return (((a) > (b)) ? (a) : (b)); }
+  T max(T a, T b) { return (a > b) ? a : b; }
   
   template<typename T>
   T min(T a, T b) { return (((a) < (b)) ? (a) : (b)); }

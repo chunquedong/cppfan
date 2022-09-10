@@ -106,15 +106,15 @@ size_t TextCodec::unicodeToUtf8(const wchar_t *w, char *out, size_t limit ) {
 //  return WideCharToMultiByte( CP_UTF8, 0, w, -1, out, limit, NULL, NULL );
 //}
 
-int TextCodec::ansiToUnicode( const char *s, wchar_t *out, int limit ) {
+size_t TextCodec::ansiToUnicode( const char *s, wchar_t *out, size_t limit ) {
   return MultiByteToWideChar(CP_ACP,0,s,-1,out,limit);
 }
 
-int TextCodec::unicodeToAnsi( const wchar_t *w, char *out, int limit ) {
+size_t TextCodec::unicodeToAnsi( const wchar_t *w, char *out, size_t limit ) {
   return WideCharToMultiByte(CP_ACP, 0, w, -1, out, limit, NULL, NULL );
 }
 
-int TextCodec::ansiToUtf8( const char *in, char *out, int limit ) {
+size_t TextCodec::ansiToUtf8( const char *in, char *out, size_t limit ) {
   int rc;
   wchar_t *wbuf = new wchar_t[limit];
   rc = TextCodec::ansiToUnicode(in, wbuf, limit);
@@ -126,13 +126,13 @@ int TextCodec::ansiToUtf8( const char *in, char *out, int limit ) {
   return rc;
 }
 
-int TextCodec::utf8ToAnsi( const char *in, char *out, int limit ) {
+size_t TextCodec::utf8ToAnsi( const char *in, char *out, size_t limit ) {
   int rc;
   wchar_t *wbuf = new wchar_t[limit];
   rc = TextCodec::utf8ToUnicode(in, wbuf, limit);
   if (rc == 0) return 0;
   wbuf[limit-1] = 0;
-  rc = TextCodec::nicodeToAnsi(wbuf, out, limit);
+  rc = TextCodec::unicodeToAnsi(wbuf, out, limit);
   out[limit-1] = 0;
   delete[] wbuf;
   return rc;

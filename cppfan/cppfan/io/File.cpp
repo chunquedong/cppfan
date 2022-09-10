@@ -47,8 +47,8 @@ bool File::rename(Str &name) {
 }
 
 Str File::getBaseName(Str &_path) {
-    ssize_t i = _path.index(Str("/"));
-    ssize_t j = _path.index(Str("."));
+    int i = _path.index(Str("/"));
+    int j = _path.index(Str("."));
     if (i == -1 || j==-1 || i>=j) {
         return "";
     }
@@ -56,7 +56,7 @@ Str File::getBaseName(Str &_path) {
 }
 
 Str File::getName(Str &_path) {
-    ssize_t i = _path.index(Str("/"));
+    int i = _path.index(Str("/"));
     if (i == -1) {
         return _path;
     }
@@ -64,7 +64,7 @@ Str File::getName(Str &_path) {
 }
 
 Str File::getParentPath(Str &_path) {
-    ssize_t i = _path.index(Str("/"));
+    int i = _path.index(Str("/"));
     if (i == -1) {
         return "";
     }
@@ -72,7 +72,7 @@ Str File::getParentPath(Str &_path) {
 }
 
 Str File::getExtName(Str &_path) {
-    ssize_t j = _path.index(Str("."));
+    int j = _path.index(Str("."));
     if (j==-1) {
         return "";
     }
@@ -146,7 +146,7 @@ bool File::createDir() {
   return false;
 }
 
-bool File::delet() {
+bool File::remove() {
   if (DeleteFileA(_path.cstr())) {
     return true;
   }
@@ -158,8 +158,8 @@ std::vector<File> File::list() {
   
   WIN32_FIND_DATAA *findFileData;
   HANDLE hFind;
-  char *regex = cf_malloc(strlen(_path.cstr())+3);
-  strcpy(regex, path);
+  char *regex = (char*)cf_malloc(strlen(_path.cstr())+3);
+  strcpy(regex, _path.cstr());
   strcat(regex, "\\*");
   
   findFileData = (WIN32_FIND_DATAA *)cf_malloc(sizeof(WIN32_FIND_DATAA)*2);
@@ -168,12 +168,12 @@ std::vector<File> File::list() {
   if (hFind == INVALID_HANDLE_VALUE)
   {
     cf_free(findFileData);
-    self->second = NULL;
+    //self->second = NULL;
     printf ("FindFirstFile failed (%d)\n", (int)GetLastError());
     return flist;
   }
 
-  if (hFind == 0) return NULL;
+  if (hFind == 0) return flist;
   findFileData[1] = findFileData[0];
   
   while (FindNextFileA(hFind, findFileData))
@@ -182,7 +182,7 @@ std::vector<File> File::list() {
     flist.push_back(f);
   }
   FindClose(hFind);
-  cf_free(findFileData)
+  cf_free(findFileData);
   return flist;
 }
 

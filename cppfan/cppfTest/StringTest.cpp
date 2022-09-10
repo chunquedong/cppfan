@@ -33,6 +33,7 @@ CF_DEF_TEST(testFormat){
 CF_DEF_TEST(testTrans){
     Str s = L" aBc ";
     s.trim();
+    puts(s.cstr());
     cf_verify(s == L"aBc");
     Str u = s.toUpper();
     cf_verify(s == L"aBc");

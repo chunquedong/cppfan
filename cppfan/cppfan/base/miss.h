@@ -60,10 +60,10 @@
  * misc
  */
 #ifdef  _MSC_VER
-  #define inline      __inline
+  //#define inline      __inline
   #define __func__    __FUNCTION__
-  #define snprintf    _snprintf
-  #define vsnprintf   _vsnprintf
+  //#define snprintf    _snprintf
+  //#define vsnprintf   _vsnprintf
   #define strcasecmp  _stricmp
   #define strtoll     _strtoi64
   #define tzset       _tzset
@@ -76,8 +76,8 @@
 #endif
 
 
-#ifndef offsetof
-  #define offsetof(s, m)   (size_t)&(((s *)0)->m)
-#endif
+//#ifndef offsetof
+//  #define offsetof(s, m)   (size_t)&(((s *)0)->m)
+//#endif
 
 #endif //_CF_MISS_H_

@@ -37,6 +37,7 @@ uint64_t currentThreadId();
  * compare and swap
  */
 #if defined(CF_WIN)
+#include <Windows.h>
   #define cf_compareAndSwap(ptr, old, new) (InterlockedCompareExchange((LPLONG)ptr, new, old) == old)
 #elif defined(__IOS__)
 #include <libkern/OSAtomic.h>

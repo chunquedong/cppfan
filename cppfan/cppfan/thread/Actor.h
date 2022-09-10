@@ -16,6 +16,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <functional>
 
 #include "cppfan/base/Object.h"
 #include "cppfan/thread/Timer.h"

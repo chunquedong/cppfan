@@ -1,0 +1,9 @@
+name = cppfan
+summary = A collection of C++ foundation class
+outType = lib
+version = 1.0
+srcDirs = cppfan/*,thirdparty/
+incDir = cppfan/
+extIncDirs = ./,thirdparty/,/C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/*
+defines = __STDC__
+#excludeSrc = .*main.*

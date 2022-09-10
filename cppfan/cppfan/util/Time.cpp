@@ -149,7 +149,8 @@ std::string DateTime::format(const char *format) {
   }
   int64_t ms = millis();
   struct timeval tms = {(long)ms/1000, ((int32_t)ms*1000)};
-  strftime(buffer, sizeof(buffer), format, localtime(&tms.tv_sec));
+  time_t ts = tms.tv_sec;
+  strftime(buffer, sizeof(buffer), format, localtime(&ts));
   sprintf(timeStr, "%s.%03lld", buffer, ms%1000);
   return timeStr;
 }

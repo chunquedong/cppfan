@@ -12,6 +12,7 @@
 #define _CPPF_HASHMAP_H_
 
 #include <unordered_map>
+#include <functional>
 
 #include "cppfan/base/Object.h"
 #include "cppfan/container/LinkedList.h"

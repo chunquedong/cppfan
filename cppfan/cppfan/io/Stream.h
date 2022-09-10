@@ -67,11 +67,13 @@ public:
 
 };
 
+#ifndef ssize_t
+  #define ssize_t signed long
+#endif
+
 class Stream : public Object, NoCopyable {
 public:
   Endian::Type endian = Endian::Big;
-  
-  
   virtual ssize_t write(const char *buf, size_t size) = 0;
 
   /**

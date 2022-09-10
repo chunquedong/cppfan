@@ -12,6 +12,10 @@
 
 #include "TextCodec.h"
 
+#include <functional>
+#include <wctype.h>
+
+
 CF_USING_NAMESPACE
 
 size_t String::hashCode() const {
@@ -29,13 +33,29 @@ String String::operator+(const String &s) {
 }
 
 void String::trimEnd() {
-  str.erase(std::find_if(str.rbegin(), str.rend(),
-                       std::not1(std::ptr_fun<int, int>(std::iswspace))).base(), str.end());
+  int i = str.size()-1;
+  for (; i >=0; --i) {
+    if (!iswspace(str[i])) {
+      break;
+    }
+  }
+
+  if (i < str.size()-1) {
+    str.erase(str.begin()+i+1, str.end());
+  }
 }
 
 void String::trimStart() {
-  str.erase(str.begin(), std::find_if(str.begin(), str.end(),
-                                  std::not1(std::ptr_fun<int, int>(std::iswspace))));
+  int i = 0;
+  for (; i < str.size(); ++i) {
+    if (!iswspace(str[i])) {
+      break;
+    }
+  }
+
+  if (i > 0) {
+    str.erase(str.begin(), str.begin()+i);
+  }
 }
 
 bool String::iequals(const String& b) const
