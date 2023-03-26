@@ -171,7 +171,7 @@ public:
         t = Queue<T>::queue.front();
         Queue<T>::queue.pop_front();
         
-        ConcurrentQueue<T>::unlock();
+        //ConcurrentQueue<T>::unlock();
         return true;
       }
     }
