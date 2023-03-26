@@ -13,7 +13,7 @@
 CF_USING_NAMESPACE
 
 Actor::Actor()
-: Task(false), threadPool(nullptr), maxMsgsBeforeYield(1), timer(nullptr) {
+: Task(false), threadPool(nullptr), maxMsgsBeforeYield(1), timer(nullptr), isRuning(false) {
 }
 
 void Actor::start(ThreadPool *threadPool, int maxMsgsBeforeYield, Timer *timer) {
